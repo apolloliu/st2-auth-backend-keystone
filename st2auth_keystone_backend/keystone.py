@@ -53,12 +53,18 @@ class KeystoneAuthenticationBackend(object):
     def authenticate(self, username, password):
         if self._keystone_version == 2:
             creds = self._get_v2_creds(username=username, password=password)
-            login = requests.post(urljoin(self._keystone_url, 'v2.0/tokens'), json=creds)
+            login_url = urljoin(self._keystone_url, 'v2.0/tokens')
         elif self._keystone_version == 3:
             creds = self._get_v3_creds(username=username, password=password)
-            login = requests.post(urljoin(self._keystone_url, 'v3/auth/tokens'), json=creds)
+            login_url = urljoin(self._keystone_url, 'v3/auth/tokens')
         else:
             raise Exception("Keystone version {} not supported".format(self._keystone_version))
+
+        try:
+            login = requests.post(login_url, json=creds)
+        except Exception as e:
+            LOG.debug('Authentication for user "{}" failed: {}'.format(username, str(e)))
+            return False
 
         if login.status_code in [httplib.OK, httplib.CREATED]:
             LOG.debug('Authentication for user "{}" successful'.format(username))
