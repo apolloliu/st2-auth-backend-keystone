@@ -1,4 +1,4 @@
-# MongoDB StackStorm Authentication Backend
+# OpenStack Keystone StackStorm Authentication Backend
 
 [![Build Status](https://api.travis-ci.org/StackStorm/st2-auth-backend-keystone.svg?branch=master)](https://travis-ci.org/StackStorm/st2-auth-backend-keystone) [![IRC](https://img.shields.io/irc/%23stackstorm.png)](http://webchat.freenode.net/?channels=stackstorm)
 
