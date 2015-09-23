@@ -8,9 +8,9 @@ credentials and authenticates user against an OpenStack Keystone instance.
 For information on how to install and configure this backend, please see the official
 documentation - http://docs.stackstorm.com/config/authentication.html#keystone-backend
 
-Note: This backend was originally contributed to st2 repo by itaka
-(https://github.com/StackStorm/st2/pull/1732, https://github.com/StackStorm/st2/pull/1737, 
-https://github.com/StackStorm/st2/pull/1984).
+Note: This backend was originally contributed to st2 repo by [itaka](
+https://github.com/Itxaka) (https://github.com/StackStorm/st2/pull/1732,
+https://github.com/StackStorm/st2/pull/1737, https://github.com/StackStorm/st2/pull/1984).
 
 ## Copyright, License, and Contributors Agreement
 
