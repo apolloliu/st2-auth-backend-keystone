@@ -1,16 +1,40 @@
-# OpenStack Keystone StackStorm Authentication Backend
+# OpenStack Keystone authentication plugin for StackStorm Community edition
 
 [![Build Status](https://api.travis-ci.org/StackStorm/st2-auth-backend-keystone.svg?branch=master)](https://travis-ci.org/StackStorm/st2-auth-backend-keystone) [![IRC](https://img.shields.io/irc/%23stackstorm.png)](http://webchat.freenode.net/?channels=stackstorm)
 
-This repository contains OpenStack Keystone StackStorm authentication backend. This backend reads
-credentials and authenticates user against an OpenStack Keystone instance.
+The OpenStack Keystone backend reads credentials and authenticates user against an OpenStack
+Keystone instance. This backend was originally contributed to st2 repo by [itaka](
+https://github.com/Itxaka) under [PR #1732](https://github.com/StackStorm/st2/pull/1732),
+[PR #1737](https://github.com/StackStorm/st2/pull/1737), and 
+[PR #1984](https://github.com/StackStorm/st2/pull/1984).
 
-For information on how to install and configure this backend, please see the official
-documentation - http://docs.stackstorm.com/config/authentication.html#keystone-backend
+### Configuration Options
 
-Note: This backend was originally contributed to st2 repo by [itaka](
-https://github.com/Itxaka) (https://github.com/StackStorm/st2/pull/1732,
-https://github.com/StackStorm/st2/pull/1737, https://github.com/StackStorm/st2/pull/1984).
+| option           | required | default | description                                              |
+|------------------|----------|---------|----------------------------------------------------------|
+| keystone_url     | yes      |         | Keystone public URL (i.e. "http://example.com:5000")     |
+| keystone_version | no       | 2       | Keystone API version                                     |
+
+### Configuration Example
+
+Please refer to the authentication section in the StackStorm
+[documentation](http://docs.stackstorm.com) for basic setup concept. The
+following is an example of the auth section in the StackStorm configuration file for the flat-file
+backend.
+
+```
+[auth]
+mode = standalone
+backend = keystone
+backend_kwargs = {"keystone_url": "http://identity.example.com:5000", "keystone_version": 2}
+enable = True
+use_ssl = True
+cert = /path/to/ssl/cert/file
+key = /path/to/ssl/key/file
+logging = /path/to/st2auth.logging.conf
+api_url = https://myhost.example.com:9101
+debug = False
+```
 
 ## Copyright, License, and Contributors Agreement
 
