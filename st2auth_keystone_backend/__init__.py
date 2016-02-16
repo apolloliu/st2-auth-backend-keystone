@@ -18,3 +18,5 @@ from keystone import KeystoneAuthenticationBackend
 __all__ = [
     'KeystoneAuthenticationBackend'
 ]
+
+__version__ = '0.1.0'
