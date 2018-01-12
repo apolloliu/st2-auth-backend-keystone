@@ -35,7 +35,7 @@ class KeystoneAuthenticationBackend(object):
     Note: This backend depends on the "requests" library.
     """
 
-    def __init__(self, keystone_url, keystone_version=2):
+    def __init__(self, keystone_url, keystone_version=2, keystone_mode='username'):
         """
         :param keystone_url: Url of the Keystone server to authenticate against.
         :type keystone_url: ``str``
@@ -49,13 +49,17 @@ class KeystoneAuthenticationBackend(object):
                             "(e.x.: http://example.com:5000)".format(keystone_url))
         self._keystone_url = keystone_url
         self._keystone_version = keystone_version
+        self._keystone_mode = keystone_mode
 
     def authenticate(self, username, password):
         if self._keystone_version == 2:
             creds = self._get_v2_creds(username=username, password=password)
             login_url = urljoin(self._keystone_url, 'v2.0/tokens')
-        elif self._keystone_version == 3:
+        elif self._keystone_version == 3 and self._keystone_mode == 'username':
             creds = self._get_v3_creds(username=username, password=password)
+            login_url = urljoin(self._keystone_url, 'v3/auth/tokens')
+        elif self._keystone_version == 3 and self._keystone_mode == 'email':
+            creds = self._get_v3_creds_without_domain(email=username, password=password)
             login_url = urljoin(self._keystone_url, 'v3/auth/tokens')
         else:
             raise Exception("Keystone version {} not supported".format(self._keystone_version))
@@ -100,6 +104,24 @@ class KeystoneAuthenticationBackend(object):
                         },
                         "user": {
                             "name": username,
+                            "password": password
+                        }
+                    }
+                }
+            }
+        }
+        return creds
+
+    def _get_v3_creds_without_domain(self, email, password):
+        creds = {
+            "auth": {
+                "identity": {
+                    "methods": [
+                        "password"
+                    ],
+                    "password": {
+                        "user": {
+                            "email": email,
                             "password": password
                         }
                     }

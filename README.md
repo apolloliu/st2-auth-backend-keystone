@@ -14,6 +14,8 @@ https://github.com/Itxaka) under [PR #1732](https://github.com/StackStorm/st2/pu
 |------------------|----------|---------|----------------------------------------------------------|
 | keystone_url     | yes      |         | Keystone public URL (i.e. "http://example.com:5000")     |
 | keystone_version | no       | 2       | Keystone API version                                     |
+| keystone_mode    | yes      |         | Keystone Mode to choose use username or email. This is   |
+|                  |          |         | only used for keystone v3 to get all domains' users.     |
 
 ### Configuration Example
 
@@ -26,7 +28,7 @@ backend.
 [auth]
 mode = standalone
 backend = keystone
-backend_kwargs = {"keystone_url": "http://identity.example.com:5000", "keystone_version": 2}
+backend_kwargs = {"keystone_url": "http://identity.example.com:5000", "keystone_version": 2, "keystone_mode": "username"}
 enable = True
 use_ssl = True
 cert = /path/to/ssl/cert/file
