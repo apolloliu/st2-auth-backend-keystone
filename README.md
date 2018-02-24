@@ -5,7 +5,7 @@
 The OpenStack Keystone backend reads credentials and authenticates user against an OpenStack
 Keystone instance. This backend was originally contributed to st2 repo by [itaka](
 https://github.com/Itxaka) under [PR #1732](https://github.com/StackStorm/st2/pull/1732),
-[PR #1737](https://github.com/StackStorm/st2/pull/1737), and 
+[PR #1737](https://github.com/StackStorm/st2/pull/1737), and
 [PR #1984](https://github.com/StackStorm/st2/pull/1984).
 
 ### Configuration Options
@@ -14,6 +14,8 @@ https://github.com/Itxaka) under [PR #1732](https://github.com/StackStorm/st2/pu
 |------------------|----------|---------|----------------------------------------------------------|
 | keystone_url     | yes      |         | Keystone public URL (i.e. "http://example.com:5000")     |
 | keystone_version | no       | 2       | Keystone API version                                     |
+| keystone_mode    | yes      |         | Keystone Mode to choose use username or email. This is   |
+|                  |          |         | only used for keystone v3 to get all domains' users.     |
 
 ### Configuration Example
 
@@ -26,7 +28,7 @@ backend.
 [auth]
 mode = standalone
 backend = keystone
-backend_kwargs = {"keystone_url": "http://identity.example.com:5000", "keystone_version": 2}
+backend_kwargs = {"keystone_url": "http://identity.example.com:5000", "keystone_version": 2, "keystone_mode": "username"}
 enable = True
 use_ssl = True
 cert = /path/to/ssl/cert/file
@@ -36,6 +38,8 @@ api_url = https://myhost.example.com:9101
 debug = False
 ```
 
+Allow synchronize keystone roles and distinguish users' roles according to role_assignment definitions when rbac is enabled.
+
 ## Copyright, License, and Contributors Agreement
 
 Copyright 2015 StackStorm, Inc.
@@ -44,6 +48,6 @@ Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 compliance with the License. You may obtain a copy of the License in the [LICENSE](LICENSE) file,
 or at: [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
-By contributing you agree that these contributions are your own (or approved by your employer) and 
+By contributing you agree that these contributions are your own (or approved by your employer) and
 you grant a full, complete, irrevocable copyright license to all users and developers of the
 project, present and future, pursuant to the license of the project.
