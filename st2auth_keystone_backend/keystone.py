@@ -148,7 +148,8 @@ class KeystoneAuthenticationBackend(object):
         roles = self._get_role_assignment()
         LOG.debug('Keystone roles are: %s', roles)
         for r in roles["role_assignments"]:
-            groups.append(r["role"]["name"])
+            if r['scope'].get('domain', None):
+                groups.append(r["role"]["name"])
         return groups
 
     def _get_role_assignment(self):
